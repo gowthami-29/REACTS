@@ -1,0 +1,32 @@
+import { useEffect, useState } from "react";
+
+function UserData(){
+
+    const [user,setUser]=useState(null);
+    const [loading,setLoading]=useState(true);
+    useEffect(()=>{
+        fetch("https://jsonplaceholder.typicode.com/users/1")
+        .then((res)=>res.json())
+        .then((data)=>{
+            setUser(data);
+            setLoading(false);
+        })
+        .catch((error)=>{
+            console.log(error);
+            setLoading(false);
+        })
+
+    },[]);
+    if(loading){
+        return <h2>Loading...</h2>;
+    }
+    return(
+        <div>
+            <h2>User Details</h2>
+            <p><b>Name:</b> {user.name}</p>
+            <p><b>Email:</b> {user.email}</p>
+            <p><b>Phone</b> {user.phone}</p>
+        </div>
+    )
+}
+export default UserData;
